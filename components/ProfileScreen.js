@@ -31,7 +31,7 @@ const ProfileScreen = ({ navigation, route }) => {
         }]}>
             <Pressable style={styles.button} 
             onPress={() => {
-                navigation.navigate('CourseDetail')
+                navigation.navigate('CourseDetail', {subject: subject, number: number})
             }}>
             <Text style={styles.text} >Search</Text>
             </Pressable>
