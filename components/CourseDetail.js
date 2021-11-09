@@ -1,10 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
-export default function CourseDetail() {
+
+const CourseDetail = (course) => {
+
+    let subject = course.route.params.subject
+    let number = course.route.params.number
+
     return (
     <Text>
-        Hi
+        {subject} {number}
     </Text>
     )
 }
 
+export default CourseDetail
