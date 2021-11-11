@@ -26,6 +26,7 @@ const ProfileScreen = ({ navigation, route }) => {
             placeholder="&#x1F50E; Number"
             value={number}
         />
+        
         <View style={[{
         paddingTop: 30
         }]}>
