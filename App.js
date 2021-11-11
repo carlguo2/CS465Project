@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import ProfileScreen from './components/ProfileScreen';
 import CourseDetail from './components/CourseDetail';
+import LectureOnHold from './components/LectureOnHold';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const App = () => {
           options={{ title: 'Welcome' }}
         />
         <Stack.Screen name="CourseDetail" component={CourseDetail} />
+        <Stack.Screen name="LectureOnHold" component={LectureOnHold} />
       </Stack.Navigator>
     </NavigationContainer>
   );

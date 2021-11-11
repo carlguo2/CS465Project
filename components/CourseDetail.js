@@ -3,11 +3,9 @@ import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 
 import { fonts } from "react-native-elements/dist/config";
 import courseData from "../backend/courses_new.json";
 
-const CourseDetail = (course) => {
+const CourseDetail = ({navigation, route}) => {
 
-    let {subject, number} = course.route.params;
-
-    let classList = ['400', '401', '407'];
+    let {subject, number} = route.params;
     
     function retrieveCourseData() {
         var courses = [];
@@ -43,7 +41,7 @@ const CourseDetail = (course) => {
                             <View style={[styles.container, {flexDirection: "row"}]}>
                             <Pressable
                             style={[styles.button, styles.buttonAdd]}
-                            onPress={() => alert("Added!")}
+                                onPress={() => navigation.navigate('LectureOnHold', {})}
                             >
                             <Text style={styles.textStyle}>Add</Text>
                             </Pressable>
