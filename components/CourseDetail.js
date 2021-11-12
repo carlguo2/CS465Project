@@ -3,34 +3,19 @@ import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 
 import { fonts } from "react-native-elements/dist/config";
 import courseData from "../backend/courses.json";
 
-import * as SQLite from 'expo-sqlite'
-const db = SQLite.openDatabase('db.testDb')
-
-db.transaction(tx => {
-    tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT, count INT)'
-    )
-})
-
-const newItem = () => {
-    db.transaction(tx => {
-      tx.executeSql('INSERT INTO items (text, count) values (?, ?)', ['gibberish', 0],
-        (txObj, resultSet) => alert(JSON.stringify(resultSet)),
-        (txObj, error) => console.log('Error', error))
-    })
-}
-
 const CourseDetail = ({navigation, route}) => {
 
     let {subject, number} = route.params;
     
     function retrieveCourseData() {
+
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
-            if (subject === courseData[i].Subject && (number === "" || parseInt(number) === courseData[i].Number)) {
+            if (subject === courseData[i].Subject && (number === "" || parseInt(number) === courseData[i].Number) && !(courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
                 courses.push(courseData[i]);
             }
         }
+      
         return courses.map((course) => {
             const [modalVisible, setModalVisible] = useState(false);
             return (
@@ -69,7 +54,7 @@ const CourseDetail = ({navigation, route}) => {
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {
                                 setModalVisible(!modalVisible)
-                                newItem()
+                                // newItem()
                             }}
                             >
                             <Text style={styles.textStyle}>Cancel</Text>

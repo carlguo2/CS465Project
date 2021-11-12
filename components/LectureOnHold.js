@@ -27,7 +27,7 @@ const LectureOnHold = ({navigation, route}) => {
                 <View style = {styles.btm}>
                     <Pressable
                             style={[styles.button, styles.buttonAdd]}
-                                onPress={() => alert("hi")}
+                                onPress={() => navigation.navigate('DiscussionDetail', {course: course})}
                             >
                     <Text style={styles.textStyle}>Next</Text>
                     </Pressable>

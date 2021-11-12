@@ -5,10 +5,12 @@ import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import ProfileScreen from './components/ProfileScreen';
 import CourseDetail from './components/CourseDetail';
 import LectureOnHold from './components/LectureOnHold';
+import DiscussionDetail from './components/DiscussionDetail';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -19,21 +21,10 @@ const App = () => {
         />
         <Stack.Screen name="CourseDetail" component={CourseDetail} />
         <Stack.Screen name="LectureOnHold" component={LectureOnHold} />
+        <Stack.Screen name="DiscussionDetail" component={DiscussionDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default App;
-
-
-// const HomeScreen = ({ navigation }) => {
-//   return (
-//     <Button
-//       title="Go to Jane's profile"
-//       onPress={() =>
-//         avigation.navigate('Profile', { name: 'Jane' })
-//       }
-//     />
-//   );
-// };
