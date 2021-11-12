@@ -3,6 +3,23 @@ import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 
 import { fonts } from "react-native-elements/dist/config";
 import courseData from "../backend/courses.json";
 
+import * as SQLite from 'expo-sqlite'
+const db = SQLite.openDatabase('db.testDb')
+
+db.transaction(tx => {
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT, count INT)'
+    )
+})
+
+const newItem = () => {
+    db.transaction(tx => {
+      tx.executeSql('INSERT INTO items (text, count) values (?, ?)', ['gibberish', 0],
+        (txObj, resultSet) => alert(JSON.stringify(resultSet)),
+        (txObj, error) => console.log('Error', error))
+    })
+}
+
 const CourseDetail = ({navigation, route}) => {
 
     let {subject, number} = route.params;
@@ -42,15 +59,18 @@ const CourseDetail = ({navigation, route}) => {
                             <Pressable
                             style={[styles.button, styles.buttonAdd]}
                                 onPress={() => {
-                                    navigation.navigate('LectureOnHold', {course: course})
                                     setModalVisible(!modalVisible)
+                                    navigation.navigate('LectureOnHold', {course: course})
                                 }}
                             >
                             <Text style={styles.textStyle}>Add</Text>
                             </Pressable>
                             <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={() => {
+                                setModalVisible(!modalVisible)
+                                newItem()
+                            }}
                             >
                             <Text style={styles.textStyle}>Cancel</Text>
                             </Pressable>
