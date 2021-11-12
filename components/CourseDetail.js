@@ -38,7 +38,7 @@ const CourseDetail = ({navigation, route}) => {
                             <Text style={styles.modalText}>{"Location: " + course.Building + " " + course.Room}</Text>
                             <Text style={styles.modalTextPrereq}>{course["Section Info"]}</Text>
                             <Text style={styles.modalTextName}>Times</Text>
-                            <View style={[styles.container, {flexDirection: "row"}]}>
+                            <View style={[{flexDirection: "row"}]}>
                             <Pressable
                             style={[styles.button, styles.buttonAdd]}
                                 onPress={() => navigation.navigate('LectureOnHold', {})}
