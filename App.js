@@ -6,6 +6,7 @@ import ProfileScreen from './components/ProfileScreen';
 import CourseDetail from './components/CourseDetail';
 import LectureOnHold from './components/LectureOnHold';
 import DiscussionDetail from './components/DiscussionDetail';
+import LabOnHold  from './components/LabOnHold';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const App = () => {
         <Stack.Screen name="CourseDetail" component={CourseDetail} />
         <Stack.Screen name="LectureOnHold" component={LectureOnHold} />
         <Stack.Screen name="DiscussionDetail" component={DiscussionDetail} />
+        <Stack.Screen name="LabOnHold" component={LabOnHold} />
       </Stack.Navigator>
     </NavigationContainer>
   );

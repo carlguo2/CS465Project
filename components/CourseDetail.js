@@ -68,7 +68,7 @@ const CourseDetail = ({navigation, route}) => {
                         setModalVisible(true)
                     }}>
                         <Text style = {styles.text}>
-                        {course.Subject + "   " + course.Number}
+                        {course.Subject + "   " + course.Number + "    " + course.Type}
                         </Text>
                     </Pressable>
                 </View>

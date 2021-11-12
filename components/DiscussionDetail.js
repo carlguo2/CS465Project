@@ -4,13 +4,13 @@ import courseData from "../backend/courses.json";
 
 const DiscussionDetail = ({navigation, route}) => {
     
-    let course = route.params.course;
+    let courseL = route.params.course;
     
     function retrieveLabData() {
         //console.log("called")
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
-            if (course.Subject === courseData[i].Subject && (course.Number === "" || parseInt(course.Number) === courseData[i].Number) && (courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
+            if (courseL.Subject === courseData[i].Subject && (courseL.Number === "" || parseInt(courseL.Number) === courseData[i].Number) && (courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
                 courses.push(courseData[i]);
             }
         }
@@ -18,7 +18,11 @@ const DiscussionDetail = ({navigation, route}) => {
         
         return courses.map((course) => {                
                     return (
-                        <Pressable style={styles.entry}>
+                        <Pressable style={styles.entry}
+                        onPress={() => {
+                            navigation.navigate('LabOnHold', {lab: course, lec: courseL})
+                        }}>
+                        <Text>{course.Type}</Text>
                         <Text>
                             {course["Days of Week"]}  |  {course["Start Time"]}  -  {course["End Time"]}
                         </Text>
