@@ -4,8 +4,6 @@ import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-nativ
 const LabOnHold = ({navigation, route}) => {
 
     let {lab, lec} = route.params;
-    //onsole.log(lab)
-    //console.log(lec)
     return (
         <View style={styles.container}>
                 <View  style={styles.title}>
