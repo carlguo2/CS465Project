@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 'react-native';
 import { fonts } from "react-native-elements/dist/config";
-import courseData from "../backend/courses_new.json";
+import courseData from "../backend/courses.json";
 
 const CourseDetail = ({navigation, route}) => {
 
@@ -41,7 +41,10 @@ const CourseDetail = ({navigation, route}) => {
                             <View style={[{flexDirection: "row"}]}>
                             <Pressable
                             style={[styles.button, styles.buttonAdd]}
-                                onPress={() => navigation.navigate('LectureOnHold', {})}
+                                onPress={() => {
+                                    navigation.navigate('LectureOnHold', {course: course})
+                                    setModalVisible(!modalVisible)
+                                }}
                             >
                             <Text style={styles.textStyle}>Add</Text>
                             </Pressable>
