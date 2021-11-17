@@ -1,8 +1,8 @@
-import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, Modal, View, Pressable } from 'react-native';
 import React from 'react';
 
 function CourseModal(props) {
-    const { course, modalVisible, setModalVisible } = props;
+    const { course, modalVisible, setModalVisible, navigation } = props;
     return (
         <View style={styles.centeredView}>
             <Modal

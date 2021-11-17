@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { fonts } from "react-native-elements/dist/config";
 import courseData from "../backend/courses.json";
 import CourseModal from "./CourseModal";
@@ -10,10 +10,11 @@ const CourseDetail = ({navigation, route}) => {
     let {subject, number} = route.params;
     
     function retrieveCourseData() {
-
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
-            if (subject === courseData[i].Subject && (number === "" || parseInt(number) === courseData[i].Number) && !(courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
+            if (subject === courseData[i].Subject 
+                    && (number === "" || parseInt(number) === courseData[i].Number) 
+                    && !(courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
                 courses.push(courseData[i]);
             }
         }
@@ -25,6 +26,8 @@ const CourseDetail = ({navigation, route}) => {
                     course={course} 
                     modalVisible={modalVisible} 
                     setModalVisible={setModalVisible} 
+                    navigation={navigation}
+                    key={course.CRN}
                 />
             )
         })
