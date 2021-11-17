@@ -1,15 +1,18 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import React from 'react';
+
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     bar: {
-        marginTop: 25,
+        marginTop: 15,
         marginBottom: 0, 
-        marginLeft: 15, 
-        marginRight: 0,
-        height: 1,
-        width: 100,
-        backgroundColor: '#d3d3d3'
+        marginLeft: width/3, 
+        marginRight: width/3,
+        height: 5,
+        width: width/3,
+        backgroundColor: '#d3d3d3',
+        borderRadius: 50
     }
 })
 
