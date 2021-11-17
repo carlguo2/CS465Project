@@ -2,7 +2,12 @@
     {
         "userName": "Carl Guo",
         "courses": [{
-            
+            "Subject": "CS",
+            "Number": 100
+        },
+        {
+            "Subject": "AAS",
+            "Number": 100
         }]
     }
 ]
