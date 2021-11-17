@@ -1,16 +1,20 @@
-function CourseModal() {
+import { StyleSheet, Text, Modal, View, TextInput, Pressable, ScrollView } from 'react-native';
+import React from 'react';
+
+function CourseModal(props) {
+    const { course, modalVisible, setModalVisible } = props;
     return (
-    <View style={styles.centeredView}>
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-            }}
-        >
-            <View style={styles.centeredView}>
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.modalTextTitle}>{course.Subject + "   " + course.Number + "   "}</Text>
                     <Text style={styles.modalTextName}>{course.Name}</Text>
@@ -21,24 +25,39 @@ function CourseModal() {
                     <Text style={styles.modalText}>{"Location: " + course.Building + " " + course.Room}</Text>
                     <Text style={styles.modalTextPrereq}>{course["Section Info"]}</Text>
                     <Text style={styles.modalTextName}>Times</Text>
-                    <View style={[styles.container, {flexDirection: "row"}]}>
-                        <Pressable
-                        style={[styles.button, styles.buttonAdd]}
-                        onPress={() => alert("Added!")}
-                        >
-                            <Text style={styles.textStyle}>Add</Text>
-                        </Pressable>
-                        <Pressable
-                        style={[styles.button, styles.buttonClose]}
-                        onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Cancel</Text>
-                        </Pressable>
+                    <View style={[{flexDirection: "row"}]}>
+                    <Pressable
+                    style={[styles.button, styles.buttonAdd]}
+                        onPress={() => {
+                            setModalVisible(!modalVisible)
+                            navigation.navigate('LectureOnHold', {course: course})
+                        }}
+                    >
+                    <Text style={styles.textStyle}>Add</Text>
+                    </Pressable>
+                    <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => {
+                        setModalVisible(!modalVisible)
+                        // newItem()
+                    }}
+                    >
+                    <Text style={styles.textStyle}>Cancel</Text>
+                    </Pressable>
                     </View>
                 </View>
-            </View>
-        </Modal>
-    </View>);
+                </View>
+            </Modal>
+            <Pressable key="{course.CRN}"  style = {styles.entry}
+            onPress={() => {
+                setModalVisible(true)
+            }}>
+                <Text style = {styles.text}>
+                {course.Subject + "   " + course.Number}
+                </Text>
+            </Pressable>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -47,8 +66,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
-    },
-    modalView: {
+      },
+      modalView: {
         width: "80%",
         margin: 20,
         backgroundColor: "white",
@@ -65,52 +84,61 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderColor: "#ff5e3b",
         borderWidth: 5,
+      },
+    text: {
+        fontSize: 30,
     },
-    scroll:{
-        backgroundColor: "#fc840360"
+    entry: {
+        borderRadius: 25,
+        marginTop: 25,
+        justifyContent: "center",
+        width: "90%",
+        backgroundColor: "#fff",
+        height: 90,
+        alignItems: "center"
     },
     button: {
         borderRadius: 20,
         padding: 10,
         elevation: 2
-    },
-    buttonOpen: {
+      },
+      buttonOpen: {
         backgroundColor: "#F194FF",
-    },
-    buttonAdd: {
+      },
+      buttonAdd: {
           backgroundColor: "#2196F3",
           marginRight: 40
-    },
-    buttonClose: {
+      },
+      buttonClose: {
         backgroundColor: "#c4c4c4",
-    },
-    textStyle: {
+      },
+      textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
-    },
-    modalText: {
+      },
+      modalText: {
         marginBottom: 15,
         textAlign: "center",
         fontSize: 16
-    },
-    modalTextPrereq: {
+      },
+      modalTextPrereq: {
         marginBottom: 15,
         textAlign: "center",
         fontSize: 16,
         backgroundColor: "#fcf9b8",
         padding: 5
-    },
-    modalTextTitle: {
+      },
+      modalTextTitle: {
         marginBottom: 15,
         textAlign: "center",
         fontSize: 24
-    },
-    modalTextName: {
+      },
+      modalTextName: {
         marginBottom: 15,
         textAlign: "center",
         fontSize: 19
-    }
+      }
 });
 
 export default CourseModal;
