@@ -1,7 +1,13 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-native';
+// import * as RNFS from 'react-native-fs';
 
 const LabOnHold = ({navigation, route}) => {
+
+    // function saveToJson() {
+    //     let content = {key: "value"}
+    //     RNFS.writeFileSync("../backend/users.json", JSON.stringify(content))
+    // }
 
     let {lab, lec} = route.params;
     return (
@@ -20,7 +26,10 @@ const LabOnHold = ({navigation, route}) => {
                 <View style = {styles.btm}>
                     <Pressable
                             style={[styles.button, styles.buttonAdd]}
-                                onPress={() => {navigation.navigate('ProfileScreen', {})}}
+                                onPress={() => {
+                                    saveToJson();
+                                    navigation.navigate('ProfileScreen', {})
+                                }}
                             >
                     <Text style={styles.textStyle}>Done</Text>
                     </Pressable>

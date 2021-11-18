@@ -2,12 +2,36 @@
     {
         "userName": "Carl Guo",
         "courses": [{
-            "Subject": "CS",
-            "Number": 100
-        },
-        {
-            "Subject": "AAS",
-            "Number": 100
+                "Subject": "CS",
+                "Number": 225,
+                "Name": "Data Structures",
+                "Degree Attributes": "Quantitative Reasoning II course.",
+                "CRN": 75794,
+                "Section": "AB8",
+                "Part of Term": 1,
+                "Type": "Online Lab",
+                "Start Time": "03:00 PM",
+                "End Time": "04:50 PM",
+                "Days of Week": "R",
+                "Room": "",
+                "Building": "",
+                "Instructors": ""
+            },
+            {
+                "Subject": "MATH",
+                "Number": 241,
+                "Name": "Calculus III",
+                "Degree Attributes": "Quantitative Reasoning II course.",
+                "CRN": 49249,
+                "Section": "ADO",
+                "Part of Term": 1,
+                "Type": "Discussion/Recitation",
+                "Start Time": "01:00 PM",
+                "End Time": "01:50 PM",
+                "Days of Week": "TR",
+                "Room": 3217,
+                "Building": "Everitt Laboratory",
+                "Instructors": "Orelowitz, G"
         }]
     }
 ]
