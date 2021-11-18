@@ -55,7 +55,7 @@ export default DiscussionDetail
 
 const styles = StyleSheet.create({
     scroll:{
-        backgroundColor: "#fc840320",
+        backgroundColor: "#E84A2766",
     },
     centeredView: {
         flex: 1,

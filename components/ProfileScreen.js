@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#E84A27',
+        backgroundColor: '#E84A2799',
         alignItems: 'center',
         justifyContent: 'center',
     }

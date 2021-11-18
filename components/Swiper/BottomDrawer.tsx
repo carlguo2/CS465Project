@@ -2,9 +2,9 @@ import { Animated, Dimensions, PanResponder, GestureResponderEvent, PanResponder
 import React, { useEffect, useRef, useState } from "react"
 import { DrawerState } from "./DrawerState"
 import { animateMove, getNextState } from "./AnimateHelper"
-import { HorizontalLine } from "./HorizontalLine";
 import { CourseList } from "./CourseViews/CourseList";
 import { CourseType } from "./CourseViews/CourseType";
+import { Icon } from "react-native-elements";
 
 type BottomDrawerProps = {
     courses: Array<CourseType>,
@@ -82,7 +82,24 @@ const BottomDrawer: React.FC<BottomDrawerProps> = ({
             }]}
             /* Refers to the PanResponder created above */
             {...panResponder.panHandlers} >
-            <HorizontalLine />
+            {state._value === DrawerState.Open 
+                ?
+                <Icon 
+                    name="chevron-down"
+                    type="font-awesome"
+                    color="#a9a9a9"
+                    containerStyle={{marginTop: 5}}
+                    size={30}
+                />
+                :
+                <Icon 
+                    name="chevron-up"
+                    type="font-awesome"
+                    color="#a9a9a9"
+                    containerStyle={{marginTop: 5}}
+                    size={30}
+                />
+            }
             {
                 <CourseList courses={courses} drawerState={(state as any)._value} />
             }
