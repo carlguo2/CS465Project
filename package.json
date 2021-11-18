@@ -25,7 +25,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+<<<<<<< HEAD
     "typescript": "^4.5.2"
+=======
+    "typescript": "~4.3.5"
+>>>>>>> 608eaf138691d9d2851472770f338313db220cc7
   },
   "private": true
 }

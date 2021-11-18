@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const ProfileScreen = ({ navigation, route }) => {
     const [subject, onSubjectText] = React.useState("");
     const [number, onNumberText] = React.useState("");
+
     return (
         <View style={styles.container}>
         <Text style={styles.title}>Search for Courses</Text>
@@ -32,9 +33,15 @@ const ProfileScreen = ({ navigation, route }) => {
         }]}>
             <Pressable style={styles.button} 
             onPress={() => {
-                navigation.navigate('CourseDetail', {subject: subject, number: number})
+                navigation.navigate(
+                    'CourseDetail', 
+                    {
+                        subject: subject, 
+                        number: number
+                    }
+                )
             }}>
-            <Text style={styles.text} >Search</Text>
+                <Text style={styles.text} >Search</Text>
             </Pressable>
         </View>
         </View>
