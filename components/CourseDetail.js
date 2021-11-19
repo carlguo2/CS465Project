@@ -8,6 +8,7 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue, set, update,  } from 'firebase/database';
 import { jsonEval } from "@firebase/util";
 
+// CONFIG FIREBASE REALTIME DB
 const firebaseConfig = {
     apiKey: "AIzaSyCSycESSMI-0P9COzhOWDqfbddLhf5YCgI",
     authDomain: "cs465project-cb825.firebaseapp.com",
@@ -21,12 +22,17 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+// AN ARRAY OF CRNS (UNIQUE)
 let CRNS = []
+
+// IDENTICAL STRUCTURE OF userData, 
 
 let userData2 = [{
                     "userName": "Carl Guo",
                     "courses": []
                 }]
+
+// CRNS CONTAINS UNIQUE CRN 
 
 function setupHighscoreListener() {const db = getDatabase();
     const reference = ref(db, 'user1/');
@@ -42,13 +48,16 @@ function setupHighscoreListener() {const db = getDatabase();
       }
       CRNS = [...new Set(CRNS)]
     });
+    //alert(CRNS)
   }
+
+// 
 
 function updateCourses() {
     userData2[0].courses = []
     for (var i = 0; i < CRNS.length; i ++) {
         for (var i = 0; i < courseData.length; i++) {
-            if (courseData[i].CRN = CRNS[i]) {
+            if (courseData[i].CRN === CRNS[i]) {
                 let toAdd = {
                     "Subject": courseData[i].Subject,
                     "Number": courseData[i].Number,
@@ -64,7 +73,7 @@ function updateCourses() {
             }
         }
     }
-    
+    //alert(JSON.stringify(userData2))
 }
 
 
@@ -80,11 +89,12 @@ const CourseDetail = ({navigation, route}) => {
     function retrieveUserData(userName) {
         setupHighscoreListener()
         updateCourses()
-        alert(JSON.stringify(userData2))
-        for (let i = 0; i < userData2.length; i++) {
-            if (userData2[i].userName === userName) {
-                setUserName(userData2[i].userName);
-                setUserCourses(userData2[i].courses);
+        //alert(JSON.stringify(userData2)) 
+        //alert(JSON.stringify(userData))
+        for (let i = 0; i < userData.length; i++) {
+            if (userData[i].userName === userName) {
+                setUserName(userData[i].userName);
+                setUserCourses(userData[i].courses);
                 return;
             }
         }
