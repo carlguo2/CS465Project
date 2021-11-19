@@ -10,7 +10,9 @@ const DiscussionDetail = ({navigation, route}) => {
         //console.log("called")
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
-            if (courseL.Subject === courseData[i].Subject && (courseL.Number === "" || parseInt(courseL.Number) === courseData[i].Number) && (courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
+            if (courseL.Subject === courseData[i].Subject 
+                    && (courseL.Number === "" || parseInt(courseL.Number) === courseData[i].Number) 
+                    && (courseData[i].Type.includes("Discussion") || courseData[i].Type.includes("Lab"))) {
                 courses.push(courseData[i]);
             }
         }
@@ -20,7 +22,7 @@ const DiscussionDetail = ({navigation, route}) => {
                 return (
                     <Pressable style={styles.entry}
                     onPress={() => {
-                        navigation.navigate('LabOnHold', {lab: course, lec: courseL})
+                        navigation.navigate('LabOnHold', {lec: courseL, lab: course})
                     }}>
                     <Text>{course.Type}</Text>
                     <Text>
@@ -33,7 +35,7 @@ const DiscussionDetail = ({navigation, route}) => {
             return (
                 <Pressable style={styles.entry}
                     onPress={() => {
-                        navigation.navigate('LabOnHold', {lec: courseL})
+                        navigation.navigate('LabOnHold', {lec: courseL, lab: {}})
                     }}>
                     <Text>
                        No lab/discussion for this class, you are all set!

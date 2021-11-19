@@ -92,7 +92,7 @@ export const CourseOpenView: React.FC<CourseOpenViewProps> = ({
                     }
                 }).map((course, index) => {
                     return (
-                        <View style={styles.courseContainer}>
+                        <View style={styles.courseContainer} key={index}>
                             <View style={styles.courseTitleArea}>
                                 <View style={styles.courseTitleBox}>
                                     <Text key={index + "subject"} style={styles.courseTitleText}>

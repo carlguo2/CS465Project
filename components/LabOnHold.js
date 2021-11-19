@@ -9,18 +9,17 @@ function writeUserData(crn_lec, crn_lab) {
     const reference = ref(db, 'user1/' + Math.round(Date.now() / 1000));
     console.log(reference)
     update(reference, {
-        title: String(crn_lec + " " + crn_lab),
+        title: crn_lab ? String(crn_lec + " " + crn_lab) : String(crn_lec),
     });
 }
 
 const LabOnHold = ({navigation, route}) => {
+    let {lab, lec} = route.params;
 
     function saveToJson() {
-        writeUserData(lab.CRN, lec.CRN)
+        writeUserData(lec.CRN, lab.CRN)
         console.log("write")
     }
-
-    let {lab, lec} = route.params;
 
     return (
         <View style={styles.container}>
