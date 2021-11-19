@@ -28,13 +28,12 @@ let CRNS = []
 // IDENTICAL STRUCTURE OF userData, 
 
 let userData2 = [{
-                    "userName": "Carl Guo",
-                    "courses": []
-                }]
+    "userName": "Carl Guo",
+    "courses": []
+}]
 
-// CRNS CONTAINS UNIQUE CRN 
-
-function setupHighscoreListener() {const db = getDatabase();
+function setupHighscoreListener() {
+    const db = getDatabase();
     const reference = ref(db, 'user1/');
 
     onValue(reference, (snapshot) => {
@@ -48,7 +47,7 @@ function setupHighscoreListener() {const db = getDatabase();
       }
       CRNS = [...new Set(CRNS)]
     });
-    //alert(CRNS)
+    // console.log(CRNS)
   }
 
 // 
@@ -56,32 +55,34 @@ function setupHighscoreListener() {const db = getDatabase();
 function updateCourses() {
     userData2[0].courses = []
     for (var i = 0; i < CRNS.length; i ++) {
-        for (var i = 0; i < courseData.length; i++) {
-            if (courseData[i].CRN === CRNS[i]) {
+        for (var j = 0; j < courseData.length; j++) {
+            // console.log(courseData[j].CRN);
+            if (courseData[j].CRN === parseInt(CRNS[i])) {
                 let toAdd = {
-                    "Subject": courseData[i].Subject,
-                    "Number": courseData[i].Number,
-                    "Name": courseData[i].Name,
-                    "Start Time": courseData[i]["Start Time"],
-                    "End Time": courseData[i]["End Time"],
-                    "Days of Week": courseData[i]["Days of Week"],
-                    "Room": courseData[i].Room,
-                    "Building": courseData[i].Building,
-                    "Instructors": courseData[i].Instructors
+                    "Subject": courseData[j].Subject,
+                    "Number": courseData[j].Number,
+                    "Name": courseData[j].Name,
+                    "Start Time": courseData[j]["Start Time"],
+                    "End Time": courseData[j]["End Time"],
+                    "Days of Week": courseData[j]["Days of Week"],
+                    "Room": courseData[j].Room,
+                    "Building": courseData[j].Building,
+                    "Instructors": courseData[j].Instructors
                 }
                 userData2[0].courses.push(toAdd)
+                break;
             }
         }
     }
-    //alert(JSON.stringify(userData2))
+    // console.log(userData2[0])
 }
 
 
 const CourseDetail = ({navigation, route}) => {
 
     let {subject, number} = route.params;
-    setupHighscoreListener()
-    updateCourses()
+    // setupHighscoreListener()
+    // updateCourses()
 
     const [userCourses, setUserCourses] = useState([]);
     const [userName, setUserName] = useState("");
@@ -89,12 +90,11 @@ const CourseDetail = ({navigation, route}) => {
     function retrieveUserData(userName) {
         setupHighscoreListener()
         updateCourses()
-        //alert(JSON.stringify(userData2)) 
-        //alert(JSON.stringify(userData))
-        for (let i = 0; i < userData.length; i++) {
-            if (userData[i].userName === userName) {
-                setUserName(userData[i].userName);
-                setUserCourses(userData[i].courses);
+        console.log(userData2)
+        for (let i = 0; i < userData2.length; i++) {
+            if (userData2[i].userName === userName) {
+                setUserName(userData2[i].userName);
+                setUserCourses(userData2[i].courses);
                 return;
             }
         }
@@ -119,6 +119,7 @@ const CourseDetail = ({navigation, route}) => {
                     setModalVisible={setModalVisible} 
                     navigation={navigation}
                     key={course.CRN}
+                    userDt = {userData2}
                 />
             )
         })

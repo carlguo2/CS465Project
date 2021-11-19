@@ -4,7 +4,7 @@ import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-nativ
 const LectureOnHold = ({navigation, route}) => {
 
     let course = route.params.course;
-
+    let dt = route.params.registered;
     return (   
             <View style={styles.container}>
                 <View  style={styles.title}>

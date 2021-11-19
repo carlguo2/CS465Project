@@ -2,7 +2,7 @@ import { StyleSheet, Text, Modal, View, Pressable } from 'react-native';
 import React from 'react';
 
 function CourseModal(props) {
-    const { course, modalVisible, setModalVisible, navigation } = props;
+    const { course, modalVisible, setModalVisible, navigation, userDt } = props;
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -30,7 +30,7 @@ function CourseModal(props) {
                     style={[styles.button, styles.buttonAdd]}
                         onPress={() => {
                             setModalVisible(!modalVisible)
-                            navigation.navigate('LectureOnHold', {course: course})
+                            navigation.navigate('LectureOnHold', {course: course, registered: userDt})
                         }}
                     >
                     <Text style={styles.textStyle}>Add</Text>

@@ -88,7 +88,7 @@ const BottomDrawer: React.FC<BottomDrawerProps> = ({
                     name="chevron-down"
                     type="font-awesome"
                     color="#a9a9a9"
-                    containerStyle={{marginTop: 5}}
+                    containerStyle={{marginTop: 10}}
                     size={30}
                 />
                 :
@@ -96,7 +96,7 @@ const BottomDrawer: React.FC<BottomDrawerProps> = ({
                     name="chevron-up"
                     type="font-awesome"
                     color="#a9a9a9"
-                    containerStyle={{marginTop: 5}}
+                    containerStyle={{marginBottom: 10}}
                     size={30}
                 />
             }
