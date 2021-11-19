@@ -117,7 +117,7 @@ const CourseDetail = ({navigation, route}) => {
 
     return (
         <>
-            <ScrollView style={styles.scroll}>
+            <ScrollView style={[styles.scroll]}>
                 { retrieveCourseData() }
             </ScrollView>
             <BottomDrawer courses={userCourses} name={userName} />
@@ -129,6 +129,6 @@ export default CourseDetail
 
 const styles = StyleSheet.create({
     scroll:{
-        backgroundColor: "#fc840360"
+        backgroundColor: "#E84A2799"
     }
 });
