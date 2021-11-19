@@ -1,8 +1,40 @@
 import { StyleSheet, Text, Modal, View, Pressable } from 'react-native';
 import React from 'react';
+import { parseCourseTimes } from './Swiper/CourseViews/CourseOpenView';
 
 function CourseModal(props) {
-    const { course, modalVisible, setModalVisible, navigation, userDt } = props;
+    const { course, modalVisible, setModalVisible, navigation, userData } = props;
+    let noTimeConflict = true;
+    let timeConflictCourse = {}
+
+    function hasNoCourseConflict(
+        registeredCourse,
+        toRegisterCourse
+    ) {
+        let regCourseStartTime = parseCourseTimes(registeredCourse["Start Time"]);
+        let regCourseEndTime = parseCourseTimes(registeredCourse["End Time"]);
+        let toRegCourseStartTime = parseCourseTimes(toRegisterCourse["Start Time"]);
+        let toRegCourseEndTime = parseCourseTimes(toRegisterCourse["End Time"]);
+        // register course starts after to register
+        if (regCourseStartTime > toRegCourseEndTime) {
+            return true;
+        }
+        // to register course starts after register
+        if (toRegCourseStartTime > regCourseEndTime) {
+            return true;
+        }
+        let concatLength = (new Set(registeredCourse["Days of Week"] + toRegisterCourse["Days of Week"])).size 
+        let separateLength = registeredCourse["Days of Week"].length + toRegisterCourse["Days of Week"].length;
+        return concatLength === separateLength;
+    }
+
+    for (var i = 0; i < userData.courses.length; i++) {
+        if (!hasNoCourseConflict(course, userData.courses[i])) {
+            noTimeConflict = false;
+            timeConflictCourse = userData.courses[i];//userData.courses[i].Subject + " " + userData.courses[i].Number;
+            break;
+        }
+    }
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -25,25 +57,39 @@ function CourseModal(props) {
                     <Text style={styles.modalText}>{"Location: " + course.Building + " " + course.Room}</Text>
                     <Text style={styles.modalTextPrereq}>{course["Section Info"]}</Text>
                     <Text style={styles.modalTextName}>Times</Text>
+                    {
+                      !noTimeConflict 
+                      ? 
+                      <Text style={[{color: 'red'}]}>
+                        {
+                          "A time conflict exists with " + timeConflictCourse.Subject + " " + timeConflictCourse.Number + "!"
+                        }
+                      </Text>
+                      :
+                      <></>
+                    }
                     <View style={[{flexDirection: "row"}]}>
-                    <Pressable
-                    style={[styles.button, styles.buttonAdd]}
+                      <Pressable
+                        style={[styles.button, styles.buttonAdd]}
+                            onPress={() => {
+                                setModalVisible(!modalVisible)
+                                navigation.navigate('LectureOnHold', {
+                                  courseToAdd: course, 
+                                  noTimeConflict: noTimeConflict,
+                                  timeConflictCourse: timeConflictCourse
+                                })
+                            }}
+                      >
+                        <Text style={styles.textStyle}>Add</Text>
+                      </Pressable>
+                      <Pressable
+                        style={[styles.button, styles.buttonClose]}
                         onPress={() => {
                             setModalVisible(!modalVisible)
-                            navigation.navigate('LectureOnHold', {course: course, registered: userDt})
                         }}
-                    >
-                    <Text style={styles.textStyle}>Add</Text>
-                    </Pressable>
-                    <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => {
-                        setModalVisible(!modalVisible)
-                        // newItem()
-                    }}
-                    >
-                    <Text style={styles.textStyle}>Cancel</Text>
-                    </Pressable>
+                      >
+                        <Text style={styles.textStyle}>Cancel</Text>
+                      </Pressable>
                     </View>
                 </View>
                 </View>
@@ -52,9 +98,9 @@ function CourseModal(props) {
             onPress={() => {
                 setModalVisible(true)
             }}>
-                <Text style = {styles.text}>
+            <Text style = {styles.text}>
                 {course.Subject + "   " + course.Number}
-                </Text>
+            </Text>
             </Pressable>
         </View>
     );

@@ -1,42 +1,55 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-native';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue, set, update } from 'firebase/database';
+import GreenTick from '../../assets/greenTick.png';
 
-const LectureOnHold = ({navigation, route}) => {
 
-    let course = route.params.course;
-    let dt = route.params.registered;
-    return (   
-            <View style={styles.container}>
+function writeUserData(crn_lec, crn_lab) {
+    const db = getDatabase();
+    const reference = ref(db, 'carlguo2/' + Math.round(Date.now() / 1000));
+    console.log(reference)
+    update(reference, {
+        title: crn_lab ? String(crn_lec + " " + crn_lab) : String(crn_lec),
+    });
+}
+
+const LabOnHold = ({navigation, route}) => {
+    let {lab, lec} = route.params;
+
+    function saveToJson() {
+        writeUserData(lec.CRN, lab.CRN)
+    }
+
+    return (
+        <View style={styles.container}>
                 <View  style={styles.title}>
                     <Text style={styles.titleText}>
-                        Lecture On Hold!
+                        Add Successful!
                     </Text>
                 </View>
-                <Image style={styles.img} source={require('../assets/blueTick.png')}/>
+                <Image style={styles.img} source={GreenTick}/>
                 <View style={styles.detailView}>
                     <Text  style={styles.detail}>
-                        {course.Subject + "  " + course.Number}
-                    </Text>
-                    <Text  style={styles.detail}>
-                        {course.Name}
-                    </Text>
-                    <Text  style={styles.detail}>
-                        {course["Days of Week"] + " | " + course["Start Time"] + " - " + course["End Time"]}
+                        {lec["Name"]}
                     </Text>
                 </View>
                 <View style = {styles.btm}>
                     <Pressable
                             style={[styles.button, styles.buttonAdd]}
-                                onPress={() => navigation.navigate('DiscussionDetail', {course: course})}
+                                onPress={() => {
+                                    saveToJson();
+                                    navigation.navigate('ProfileScreen', {})
+                                }}
                             >
-                    <Text style={styles.textStyle}>Next</Text>
+                    <Text style={styles.textStyle}>Done</Text>
                     </Pressable>
                 </View>
             </View>
-    );
+    )
 }
 
-export default LectureOnHold
+export default LabOnHold
 
 const styles = StyleSheet.create({
     titleText: {
@@ -70,7 +83,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 30,
         marginTop: 30,
-        backgroundColor: "#D1D1D6"
     },
     title: {
         flex: 4
@@ -87,6 +99,7 @@ const styles = StyleSheet.create({
         alignContent: "center"
     },
     detail: {
+        fontSize: 20,
         flex: 1,
         textAlign: "center"
     }

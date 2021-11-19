@@ -1,13 +1,12 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, TextInput, Pressable, ScrollView } from 'react-native';
-import courseData from "../backend/courses.json";
+import { StyleSheet, Text, Pressable, ScrollView } from 'react-native';
+import courseData from "../../backend/courses.json";
 
 const DiscussionDetail = ({navigation, route}) => {
     
     let courseL = route.params.course;
     
     function retrieveLabData() {
-        //console.log("called")
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
             if (courseL.Subject === courseData[i].Subject 

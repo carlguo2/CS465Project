@@ -15,6 +15,14 @@ enum Days {
     F = "F"
 }
 
+export function parseCourseTimes(timeString: string): number {
+    let isAM = timeString.substr(-2,2) === "AM";
+    var hourValue = parseInt(timeString.substr(0,2));
+    let hour = isAM ? hourValue : hourValue + 12;
+    let minute = parseInt(timeString.substr(3,2));
+    return hour*60 + minute;
+}
+
 export const CourseOpenView: React.FC<CourseOpenViewProps> = ({
     courses
 }) => {
@@ -57,17 +65,6 @@ export const CourseOpenView: React.FC<CourseOpenViewProps> = ({
         )
     }
 
-    function parseCourseTimes(timeString: string): {hour: number, minute: number} {
-        let isAM = timeString.substr(-2,2) === "AM";
-        var hourValue = parseInt(timeString.substr(0,2));
-        let hour = isAM ? hourValue : hourValue + 12;
-        let minute = parseInt(timeString.substr(3,2));
-        return {
-            hour: hour,
-            minute: minute
-        }
-    }
-
     function courseLayout() : JSX.Element {
         return (
             <ScrollView style={styles.scheduleLayout}>
@@ -77,16 +74,10 @@ export const CourseOpenView: React.FC<CourseOpenViewProps> = ({
                     // parse out times
                     let courseATime = parseCourseTimes(courseA["Start Time"])
                     let courseBTime = parseCourseTimes(courseB["Start Time"]);
-                    if (courseATime.hour < courseBTime.hour) {
+                    if (courseATime < courseBTime) {
                         return -1;
-                    } else if (courseATime.hour === courseBTime.hour) {
-                        if (courseATime.minute < courseBTime.minute) {
-                            return -1;
-                        } else if (courseATime.minute === courseBTime.minute) {  // this case should never happen
-                            return 0;
-                        } else {
-                            return 1;
-                        }
+                    } else if (courseATime === courseBTime) {
+                        return 0;
                     } else {
                         return 1;
                     }

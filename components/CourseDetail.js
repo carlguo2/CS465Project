@@ -32,31 +32,30 @@ let userData2 = [{
     "courses": []
 }]
 
-function setupHighscoreListener() {
+function retrieveCoursesFromDB() {
     const db = getDatabase();
-    const reference = ref(db, 'user1/');
+    const reference = ref(db, 'carlguo2/');
 
     onValue(reference, (snapshot) => {
-      const v = snapshot.val();
-      let l = Object.keys(v)
-      for (var i = 0; i < l.length; i++) {
-          let c = v[l[i]]['title'].split(' ')
-          for (var j = 0; j < c.length; j ++) {
-            CRNS.push(c[j])
-          }
-      }
-      CRNS = [...new Set(CRNS)]
+        const v = snapshot.val();
+        if (!v) {
+            return
+        }
+        let l = Object.keys(v)
+        for (var i = 0; i < l.length; i++) {
+            let c = v[l[i]]['title'].split(' ')
+            for (var j = 0; j < c.length; j ++) {
+                CRNS.push(c[j])
+            }
+        }
+        CRNS = [...new Set(CRNS)]
     });
-    // console.log(CRNS)
-  }
-
-// 
+}
 
 function updateCourses() {
     userData2[0].courses = []
     for (var i = 0; i < CRNS.length; i ++) {
         for (var j = 0; j < courseData.length; j++) {
-            // console.log(courseData[j].CRN);
             if (courseData[j].CRN === parseInt(CRNS[i])) {
                 let toAdd = {
                     "Subject": courseData[j].Subject,
@@ -74,23 +73,19 @@ function updateCourses() {
             }
         }
     }
-    // console.log(userData2[0])
 }
 
 
 const CourseDetail = ({navigation, route}) => {
 
     let {subject, number} = route.params;
-    // setupHighscoreListener()
-    // updateCourses()
 
     const [userCourses, setUserCourses] = useState([]);
     const [userName, setUserName] = useState("");
 
     function retrieveUserData(userName) {
-        setupHighscoreListener()
+        retrieveCoursesFromDB()
         updateCourses()
-        console.log(userData2)
         for (let i = 0; i < userData2.length; i++) {
             if (userData2[i].userName === userName) {
                 setUserName(userData2[i].userName);
@@ -118,8 +113,8 @@ const CourseDetail = ({navigation, route}) => {
                     modalVisible={modalVisible} 
                     setModalVisible={setModalVisible} 
                     navigation={navigation}
+                    userData={userData2[0]}
                     key={course.CRN}
-                    userDt = {userData2}
                 />
             )
         })
