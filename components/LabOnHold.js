@@ -1,15 +1,39 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-native';
-// import * as RNFS from 'react-native-fs';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue, set, update } from 'firebase/database';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCSycESSMI-0P9COzhOWDqfbddLhf5YCgI",
+    authDomain: "cs465project-cb825.firebaseapp.com",
+    databaseURL: "https://cs465project-cb825-default-rtdb.firebaseio.com",
+    projectId: "cs465project-cb825",
+    storageBucket: "cs465project-cb825.appspot.com",
+    messagingSenderId: "168437662044",
+    appId: "1:168437662044:web:911afa9fdb8d340458c199",
+    measurementId: "G-Q8YYNN8JX0"
+};
+
+initializeApp(firebaseConfig);
+
+function writeUserData(crn_lec, crn_lab) {
+    const db = getDatabase();
+    const reference = ref(db, 'user1/' + Math.round(Date.now() / 1000));
+    console.log(reference)
+    update(reference, {
+        title: String(crn_lec + " " + crn_lab),
+    });
+}
 
 const LabOnHold = ({navigation, route}) => {
 
-    // function saveToJson() {
-    //     let content = {key: "value"}
-    //     RNFS.writeFileSync("../backend/users.json", JSON.stringify(content))
-    // }
+    function saveToJson() {
+        writeUserData(lab.CRN, lec.CRN)
+        console.log("write")
+    }
 
     let {lab, lec} = route.params;
+
     return (
         <View style={styles.container}>
                 <View  style={styles.title}>
