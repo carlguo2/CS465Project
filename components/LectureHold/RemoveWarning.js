@@ -1,5 +1,33 @@
 import React from "react";
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
+import { getDatabase, ref, onValue, set, update, get, child } from 'firebase/database';
+
+function removeInDb(timeConflictCourse) {
+    let CRN = timeConflictCourse.CRN;
+    // Loop through all the items in database
+    // Remove the one that contains CRN
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, `carlguo2/`)).then((snapshot) => {
+        if (snapshot.exists()) {
+            console.log("Data from firebase")
+            // console.log(snapshot.val());
+            let ss = snapshot.val();
+            for (var k in ss) {
+                if (ss[k]['title'].includes(CRN)) {
+                    console.log(k)
+                    const updates = {}
+                    updates['carlguo2/' + k] = null
+                    update(dbRef, updates);
+                }
+            }
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+
+}
 
 export const RemoveWarning = (props) => {
     const { courseToAdd, timeConflictCourse, navigation } = props;
@@ -47,7 +75,9 @@ export const RemoveWarning = (props) => {
                     </Pressable>
                     <Pressable
                         onPress={()=>{
-                            navigation.navigate("RemoveAllSuccess")
+                            removeInDb(timeConflictCourse)
+                            console.log(courseToAdd)
+                            navigation.navigate("RemoveAllSuccess", {course: courseToAdd})
                         }}
                         style={[styles.removeButton, styles.button]}
                     >

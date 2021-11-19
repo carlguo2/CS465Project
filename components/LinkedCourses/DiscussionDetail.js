@@ -5,6 +5,7 @@ import courseData from "../../backend/courses.json";
 const DiscussionDetail = ({navigation, route}) => {
     
     let courseL = route.params.course;
+    console.log(courseL)
     
     function retrieveLabData() {
         var courses = [];

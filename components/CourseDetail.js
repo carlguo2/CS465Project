@@ -66,7 +66,8 @@ function updateCourses() {
                     "Days of Week": courseData[j]["Days of Week"],
                     "Room": courseData[j].Room,
                     "Building": courseData[j].Building,
-                    "Instructors": courseData[j].Instructors
+                    "Instructors": courseData[j].Instructors,
+                    "CRN": courseData[j].CRN
                 }
                 userData2[0].courses.push(toAdd)
                 break;
