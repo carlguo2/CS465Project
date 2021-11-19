@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from 'react-native';
 import courseData from "../backend/courses.json";
-// import userData from "../backend/users.json";
+import userData from "../backend/users.json";
 import CourseModal from "./CourseModal";
 import BottomDrawer from "./Swiper/BottomDrawer";
 import { initializeApp } from 'firebase/app';
@@ -23,7 +23,7 @@ initializeApp(firebaseConfig);
 
 let CRNS = []
 
-let userData = [{
+let userData2 = [{
                     "userName": "Carl Guo",
                     "courses": []
                 }]
@@ -45,7 +45,7 @@ function setupHighscoreListener() {const db = getDatabase();
   }
 
 function updateCourses() {
-    //alert(JSON.stringify(userData2))
+    userData2[0].courses = []
     for (var i = 0; i < CRNS.length; i ++) {
         for (var i = 0; i < courseData.length; i++) {
             if (courseData[i].CRN = CRNS[i]) {
@@ -60,7 +60,7 @@ function updateCourses() {
                     "Building": courseData[i].Building,
                     "Instructors": courseData[i].Instructors
                 }
-                userData[0].courses.push(toAdd)
+                userData2[0].courses.push(toAdd)
             }
         }
     }
@@ -78,10 +78,13 @@ const CourseDetail = ({navigation, route}) => {
     const [userName, setUserName] = useState("");
 
     function retrieveUserData(userName) {
-        for (let i = 0; i < userData.length; i++) {
-            if (userData[i].userName === userName) {
-                setUserName(userData[i].userName);
-                setUserCourses(userData[i].courses);
+        setupHighscoreListener()
+        updateCourses()
+        alert(JSON.stringify(userData2))
+        for (let i = 0; i < userData2.length; i++) {
+            if (userData2[i].userName === userName) {
+                setUserName(userData2[i].userName);
+                setUserCourses(userData2[i].courses);
                 return;
             }
         }
