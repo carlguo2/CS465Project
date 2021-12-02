@@ -56,7 +56,6 @@ function CourseModal(props) {
                     <Text style={styles.modalText}>{"Instructor: " + course.Instructors}</Text>
                     <Text style={styles.modalText}>{"Location: " + course.Building + " " + course.Room}</Text>
                     <Text style={styles.modalTextPrereq}>{course["Section Info"]}</Text>
-                    <Text style={styles.modalTextName}>Times</Text>
                     {
                       !noTimeConflict 
                       ? 
@@ -99,7 +98,7 @@ function CourseModal(props) {
                 setModalVisible(true)
             }}>
             <Text style = {styles.text}>
-                {course.Subject + "   " + course.Number}
+                {course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] + " - " + course["End Time"]}
             </Text>
             </Pressable>
         </View>
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
         borderWidth: 5,
       },
     text: {
-        fontSize: 30,
+        fontSize: 15,
     },
     entry: {
         borderRadius: 25,

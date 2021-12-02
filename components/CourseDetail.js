@@ -96,6 +96,28 @@ const CourseDetail = ({navigation, route}) => {
         }
     }
 
+    function isBefore(a, b) {
+        var time1 = a[6] == 'A' ? parseInt(a.substring(0,2)) * 60 + parseInt(a.substring(3, 5)) : (12 + parseInt(a.substring(0,2))) * 60 + parseInt(a.substring(3, 5))
+        var time2 = b[6] == 'A' ? parseInt(b.substring(0,2)) * 60 + parseInt(b.substring(3, 5)) : (12 + parseInt(b.substring(0,2))) * 60 + parseInt(b.substring(3, 5))
+        console.log(time1 + " "+ time2)
+        var t = time1 < time2
+        console.log(a + " " + b + " " + t)
+        return t
+    }
+
+    function sort(c) {
+        for (var j = 0; j < c.length; j ++) {
+            for (var k = j + 1; k < c.length; k ++) {
+                if (isBefore(c[k]["Start Time"], c[j]["Start Time"])) {
+                    var temp = c[k];
+                    c[k] = c[j]
+                    c[j] = temp
+                }
+            }
+        }
+        return c
+    }
+
     function retrieveCourseData() {
         var courses = [];
         for (var i = 0; i < courseData.length; i++) {
@@ -105,6 +127,8 @@ const CourseDetail = ({navigation, route}) => {
                 courses.push(courseData[i]);
             }
         }
+
+        courses = sort(courses)
       
         return courses.map((course) => {
             const [modalVisible, setModalVisible] = useState(false);
