@@ -163,6 +163,6 @@ export default CourseDetail
 
 const styles = StyleSheet.create({
     scroll:{
-        backgroundColor: "#E84A2799"
+        backgroundColor: "#fff"
     }
 });

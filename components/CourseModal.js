@@ -36,7 +36,7 @@ function CourseModal(props) {
         }
     }
     return (
-        <View style={styles.centeredView}>
+        <View style={styles.centeredView1}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -67,7 +67,7 @@ function CourseModal(props) {
                       :
                       <></>
                     }
-                    <View style={[{flexDirection: "row"}]}>
+                    <View style={[{flexDirection: "row", paddingTop: 20}]}>
                       <Pressable
                         style={[styles.button, styles.buttonAdd]}
                             onPress={() => {
@@ -98,7 +98,7 @@ function CourseModal(props) {
                 setModalVisible(true)
             }}>
             <Text style = {styles.text}>
-                {course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] + " - " + course["End Time"]}
+                {course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] }
             </Text>
             </Pressable>
         </View>
@@ -106,7 +106,13 @@ function CourseModal(props) {
 }
 
 const styles = StyleSheet.create({
-    centeredView: {
+      centeredView1: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+      },
+      centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -132,6 +138,8 @@ const styles = StyleSheet.create({
       },
     text: {
         fontSize: 15,
+        fontWeight: "500",
+        color: "#13294b",
     },
     entry: {
         borderRadius: 25,
@@ -140,7 +148,17 @@ const styles = StyleSheet.create({
         width: "90%",
         backgroundColor: "#fff",
         height: 90,
-        alignItems: "center"
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 2,
+        elevation: 2,
+        borderColor: "#0455A4",
+        borderWidth: 2,
     },
     button: {
         borderRadius: 20,

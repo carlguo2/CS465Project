@@ -57,7 +57,7 @@ export default DiscussionDetail
 
 const styles = StyleSheet.create({
     scroll:{
-        backgroundColor: "#E84A2766",
+        backgroundColor: "#fff",
     },
     centeredView: {
         flex: 1,
@@ -70,9 +70,20 @@ const styles = StyleSheet.create({
         marginTop: 25,
         justifyContent: "center",
         width: "90%",
-        marginLeft: "5%",
         backgroundColor: "#fff",
         height: 90,
-        alignItems: "center"
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 2,
+        elevation: 2,
+        borderColor: "#0455A4",
+        borderWidth: 2,
+        marginLeft: "5%",
+
     }
 })
