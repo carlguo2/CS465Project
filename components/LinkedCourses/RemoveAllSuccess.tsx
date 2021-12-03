@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import React from "react";
 //@ts-ignore
-import RedTick from "../../assets/redTick.png"
+import BlueTick from "../../assets/blueTick.png"
 import { CourseType } from "../Swiper/CourseViews/CourseType";
 
 interface RemoveAllSuccessProps {
@@ -30,7 +30,7 @@ const RemoveAllSuccess: React.FC<RemoveAllSuccessProps> = ({
             <View  style={styles.title}>
                 <Text  style={styles.titleText}>Remove All Sections Successful!</Text>
             </View>
-            <Image style={styles.img} source={RedTick}/>
+            <Image style={styles.img} source={BlueTick}/>
         </View>
     );
 };

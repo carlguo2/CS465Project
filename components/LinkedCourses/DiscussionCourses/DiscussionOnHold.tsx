@@ -1,8 +1,9 @@
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
+import { ImageBackground, Pressable, ScrollView, StyleSheet, Text } from "react-native";
 import { hasNoCourseConflict } from "../../CourseModal";
 import { CourseType } from "../../Swiper/CourseViews/CourseType";
-
+// @ts-ignore
+import blockI from "../../../assets/blockI.jpg";
 
 interface DiscussionOnHoldProps {
     navigation: any,
@@ -66,17 +67,26 @@ export const DiscussionOnHold: React.FC<DiscussionOnHoldProps> = ({
     }    
 
     return(
-        <ScrollView>
-            { labCourses.length > 0 ? 
-                retrieveLabData()
-            :
-                <Text>No Lab Sections to Add!</Text> 
-                }
-        </ScrollView>
+        <ImageBackground source={blockI} resizeMode="cover" style={styles.image} >
+            <ScrollView>
+                    { 
+                        labCourses.length > 0 
+                        ? 
+                        retrieveLabData()
+                        :
+                        <Text>No Lab Sections to Add!</Text> 
+                    }
+            </ScrollView>
+        </ImageBackground>
+
     );
 }
 
 const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+        justifyContent: "center"
+    },
     scroll:{
         backgroundColor: "#fff",
     },

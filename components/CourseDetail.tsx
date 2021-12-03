@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, ImageBackground, View, Dimensions } from 'react-native';
 import courseData from "../backend/courses.json";
 import { CourseModal } from "./CourseModal";
 import BottomDrawer from "./Swiper/BottomDrawer";
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue, onChildRemoved  } from 'firebase/database';
 import { CourseType } from "./Swiper/CourseViews/CourseType";
+// @ts-ignore
+import blockI from "../assets/blockI.jpg";
 
 // CONFIG FIREBASE REALTIME DB
 const firebaseConfig = {
@@ -159,22 +161,37 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
     }, [CRNs]);
 
     return (
-        <>
-            <ScrollView style={[styles.scroll]}>
-                { retrieveCourseData() }
-            </ScrollView>
-            <BottomDrawer 
-                courses={userCourses} 
-                removeCourseFromSchedule={removeCourseFromSchedule}
-            />
-        </>
+        <View style={styles.container}>
+                <ImageBackground source={blockI} resizeMode="cover" style={styles.image} />
+                <ScrollView style={[styles.scroll]}>
+
+                    { retrieveCourseData() }
+
+                </ScrollView>
+                <BottomDrawer 
+                    courses={userCourses} 
+                    removeCourseFromSchedule={removeCourseFromSchedule}
+                />
+        </View>
     )
 }
 
 export default CourseDetail
 
 const styles = StyleSheet.create({
+    container: {
+        // width: Dimensions.get('window').width,
+        // height: Dimensions.get('window').height,
+        // backgroundColor: 'transparent'
+    },
+    image: {
+        position: 'absolute', 
+        top:0, 
+        left:0,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    },
     scroll:{
-        backgroundColor: "#fff"
+        backgroundColor: "transparent",
     }
 });

@@ -144,10 +144,10 @@ export const CourseModal: React.FC<CourseModalProps> = ({
 							" (" + course['Section Credit Hours'] + ")" 
 							: 
 							(course['Credit Hours'].length > 0
-                ?
-                " (" + course['Credit Hours'] + ")"
-                :
-                ""))}
+							?
+							" (" + course['Credit Hours'] + ")"
+							:
+							""))}
 				</Text>
 				<Text style = {styles.text}>
 					{course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] }
