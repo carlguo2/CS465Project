@@ -161,7 +161,8 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
     }, [CRNs]);
 
     return (
-        <View style={styles.container}>
+        <>
+        
                 <ImageBackground source={blockI} resizeMode="cover" style={styles.image} />
                 <ScrollView style={[styles.scroll]}>
 
@@ -172,7 +173,8 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
                     courses={userCourses} 
                     removeCourseFromSchedule={removeCourseFromSchedule}
                 />
-        </View>
+        
+        </>
     )
 }
 
@@ -180,9 +182,7 @@ export default CourseDetail
 
 const styles = StyleSheet.create({
     container: {
-        // width: Dimensions.get('window').width,
-        // height: Dimensions.get('window').height,
-        // backgroundColor: 'transparent'
+        
     },
     image: {
         position: 'absolute', 
