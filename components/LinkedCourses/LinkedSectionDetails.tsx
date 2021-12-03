@@ -97,7 +97,7 @@ const LinkedSectionDetails: React.FC<LinkedSectionDetailsProps> = ({
             })
         } else {
             return (
-                <Pressable style={styles.entry}
+                <Pressable style={[styles.entry, styles.endPromptText]}
                     onPress={() => {
                         navigation.navigate('LabOnHold', {
                             lec: lectureCourse, 
@@ -155,5 +155,8 @@ const styles = StyleSheet.create({
     },
     disabled: {
         backgroundColor: '#a9a9a9'
+    },
+    endPromptText: {
+        backgroundColor: '#fff'
     }
 })

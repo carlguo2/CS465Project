@@ -3,6 +3,7 @@ import React from "react";
 import { CourseType } from "./CourseType";
 import { Dimensions, StyleSheet, Alert } from "react-native";
 import { child, get, getDatabase, ref, update } from "@firebase/database";
+import { color } from "react-native-elements/dist/helpers";
 
 interface CoursePeekViewProps {
     courses: Array<CourseType>,
@@ -36,6 +37,7 @@ export const CoursePeekView: React.FC<CoursePeekViewProps> = ({
                                             }, 
                                             {
                                                 text: "Delete",
+                                                style: 'destructive',
                                                 onPress: () => {
                                                     const dbRef = ref(getDatabase());
                                                     get(child(dbRef, 'carlguo2/')).then((snapshot) => {
