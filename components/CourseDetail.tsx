@@ -93,19 +93,19 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
         for (var i = 0; i < CRNs.length; i ++) {
             for (var j = 0; j < courseData.length; j++) {
                 if (courseData[j].CRN === parseInt(CRNs[i])) {
-                    let toAdd = {
-                        "Subject": courseData[j].Subject,
-                        "Number": courseData[j].Number,
-                        "Name": courseData[j].Name,
-                        "Start Time": courseData[j]["Start Time"],
-                        "End Time": courseData[j]["End Time"],
-                        "Days of Week": courseData[j]["Days of Week"],
-                        "Room": courseData[j].Room,
-                        "Building": courseData[j].Building,
-                        "Instructors": courseData[j].Instructors,
-                        "CRN": courseData[j].CRN
-                    }
-                    courses.push(toAdd)
+                    // let toAdd = {
+                    //     "Subject": courseData[j].Subject,
+                    //     "Number": courseData[j].Number,
+                    //     "Name": courseData[j].Name,
+                    //     "Start Time": courseData[j]["Start Time"],
+                    //     "End Time": courseData[j]["End Time"],
+                    //     "Days of Week": courseData[j]["Days of Week"],
+                    //     "Room": courseData[j].Room,
+                    //     "Building": courseData[j].Building,
+                    //     "Instructors": courseData[j].Instructors,
+                    //     "CRN": courseData[j].CRN
+                    // }
+                    courses.push(courseData[j])
                     break;
                 }
             }

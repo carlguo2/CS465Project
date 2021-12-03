@@ -65,6 +65,7 @@ export const CoursePeekView: React.FC<CoursePeekViewProps> = ({
                             <View style={styles.courseBox} key={index}>
                                 <Text style={styles.courseText}>{course.Subject}</Text>
                                 <Text style={styles.courseText}>{course.Number}</Text>
+                                <Text style={styles.courseText}>{course["Type Code"]}</Text>
                             </View>
                         </Pressable>
                     );

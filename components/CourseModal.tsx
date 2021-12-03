@@ -40,15 +40,28 @@ export const CourseModal: React.FC<CourseModalProps> = ({
 	courseList
 }) => {
     let noTimeConflict = true;
-    let timeConflictCourse = {} as CourseType;
+    let conflictCourse = {} as CourseType;
+	let choseDuplicateCourse = false;
 
+	// check for time conflict
     for (var i = 0; i < courseList.length; i++) {
-        if (!hasNoCourseConflict(course, courseList[i])) {
+        if (courseList[i].Type.includes('Lecture') && !hasNoCourseConflict(course, courseList[i])) {
             noTimeConflict = false;
-            timeConflictCourse = courseList[i];
+            conflictCourse = courseList[i];
             break;
         }
     }
+
+	// check for duplicate course chosen
+	for (var i = 0; i < courseList.length; i++) {
+		if (courseList[i].Type.includes('Lecture') && courseList[i].Subject === course.Subject 
+				&& courseList[i].Number === course.Number) {
+			choseDuplicateCourse = true;
+			conflictCourse = courseList[i];
+			break;
+		}
+	}
+
     return (
         <View style={styles.centeredView1}>
             <Modal
@@ -73,28 +86,38 @@ export const CourseModal: React.FC<CourseModalProps> = ({
                     {
                       !noTimeConflict 
                       ? 
-                      <Text style={[{color: 'red'}]}>
+                      <Text style={[{color: 'red', fontWeight: 'bold'}]}>
                         {
-                          "A time conflict exists with " + timeConflictCourse.Subject + " " + timeConflictCourse.Number + "!"
+                          "A time conflict exists with " + conflictCourse.Subject + " " + conflictCourse.Number + "!"
                         }
                       </Text>
                       :
                       <></>
                     }
+					{
+						choseDuplicateCourse
+						?
+						<Text style={[{color: 'red', fontWeight: "bold"}]}>
+							{"No chosing the same course twice!"}
+						</Text>
+						:
+						<></>
+					}
                     <View style={[{flexDirection: "row", paddingTop: 20}]}>
                       <Pressable
-                        style={[styles.button, styles.buttonAdd]}
+                        	style={[styles.button, styles.buttonAdd]}
                             onPress={() => {
                                 setModalVisible(!modalVisible)
                                 navigation.navigate('LectureOnHold', {
                                   courseToAdd: course, 
                                   noTimeConflict: noTimeConflict,
-                                  timeConflictCourse: timeConflictCourse,
+								  choseDuplicateCourse: choseDuplicateCourse,
+                                  conflictCourse: conflictCourse,
                                   courseList: courseList
                                 })
                             }}
                       >
-                        <Text style={styles.textStyle}>Add</Text>
+                        <Text style={styles.buttonTextStyle}>Add</Text>
                       </Pressable>
                       <Pressable
                         style={[styles.button, styles.buttonClose]}
@@ -102,19 +125,34 @@ export const CourseModal: React.FC<CourseModalProps> = ({
                             setModalVisible(!modalVisible)
                         }}
                       >
-                        <Text style={styles.textStyle}>Cancel</Text>
+                        <Text style={styles.buttonTextStyle}>Cancel</Text>
                       </Pressable>
                     </View>
                 </View>
                 </View>
             </Modal>
-            <Pressable key="{course.CRN}"  style = {styles.entry}
-            onPress={() => {
-                setModalVisible(true)
-            }}>
-            <Text style = {styles.text}>
-                {course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] }
-            </Text>
+            <Pressable key="{course.CRN}"  
+				style = {[styles.entry, (noTimeConflict && !choseDuplicateCourse) ? {} : styles.courseConflictStyle]}
+				onPress={() => {
+					setModalVisible(true)
+				}}
+			>
+				<Text style={styles.text}>
+					{course.Subject + course.Number + ": " + course.Section 
+						+ (course['Section Credit Hours'].length > 0 
+							? 
+							" (" + course['Section Credit Hours'] + ")" 
+							: 
+							"")
+						+  (course['Credit Hours'].length > 0
+							?
+							" (" + course['Credit Hours'] + ")"
+							:
+							"")}
+				</Text>
+				<Text style = {styles.text}>
+					{course.Type + " " + course["Days of Week"] + " | " + course["Start Time"] }
+				</Text>
             </Pressable>
         </View>
     );
@@ -161,7 +199,7 @@ const styles = StyleSheet.create({
         marginTop: 25,
         justifyContent: "center",
         width: "90%",
-        backgroundColor: "#fff",
+        backgroundColor: "#f4a460",
         height: 90,
         alignItems: "center",
         shadowColor: "#000",
@@ -174,7 +212,10 @@ const styles = StyleSheet.create({
         elevation: 2,
         borderColor: "#0455A4",
         borderWidth: 2,
-    },
+    },	
+	courseConflictStyle: {
+		backgroundColor: '#a9a9a9'
+	},
     button: {
         borderRadius: 20,
         padding: 10,
@@ -190,7 +231,7 @@ const styles = StyleSheet.create({
       buttonClose: {
         backgroundColor: "#c4c4c4",
       },
-      textStyle: {
+      buttonTextStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"

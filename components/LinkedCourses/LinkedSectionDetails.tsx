@@ -111,47 +111,6 @@ const LinkedSectionDetails: React.FC<LinkedSectionDetailsProps> = ({
                  </Pressable>
             )
         }
-
-        // // check time conflict
-        // let coursesToCheckConflict = [...courseList, lectureCourse];
-        
-        // if (linkedCourses.length > 0) {
-        //     return linkedCourses.map((linkedCourse, index) => {      
-        //         let hasTimeConflict = false;
-        //         for (let heldCourse of coursesToCheckConflict) {
-        //             if (!hasNoCourseConflict(heldCourse, linkedCourse)) {
-        //                 hasTimeConflict = true;
-        //                 break;
-        //             }
-        //         }          
-        //         return (
-        //             <Pressable 
-        //                 style={[styles.entry, hasTimeConflict ? styles.disabled : {}]} 
-        //                 key={index}
-        //                 disabled={hasTimeConflict}
-        //                 onPress={() => {
-        //                     navigation.navigate('LabOnHold', {lec: lectureCourse, lab: linkedCourse})
-        //                 }}
-        //             >
-        //                 <Text>{linkedCourse.Type + (hasTimeConflict ? " - Time Conflict :(" : "")}</Text>
-        //                 <Text>
-        //                     {linkedCourse["Days of Week"]}  |  {linkedCourse["Start Time"]}  -  {linkedCourse["End Time"]}
-        //                 </Text>
-        //             </Pressable>
-        //         )
-        //     })
-        // } else {
-        //     return (
-        //         <Pressable style={styles.entry}
-        //             onPress={() => {
-        //                 navigation.navigate('LabOnHold', {lec: lectureCourse, lab: {}})
-        //             }}>
-        //             <Text>
-        //                No lab/discussion for this class, you are all set!
-        //             </Text>
-        //          </Pressable>
-        //     )
-        // }
     }
 
     return (

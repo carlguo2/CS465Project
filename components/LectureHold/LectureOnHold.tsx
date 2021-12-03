@@ -11,7 +11,8 @@ interface LectureOnHoldProps {
 interface LectureOnHoldRouteParamProps {
     courseToAdd: CourseType,
     noTimeConflict: boolean,
-    timeConflictCourse: CourseType,
+    choseDuplicateCourse: boolean,
+    conflictCourse: CourseType,
     courseList: Array<CourseType>
 }
 
@@ -19,16 +20,22 @@ const LectureOnHold: React.FC<LectureOnHoldProps> = ({
     navigation,
     route
 }) => {
-    let { courseToAdd, noTimeConflict, timeConflictCourse, courseList }: LectureOnHoldRouteParamProps = route.params;
+    let { 
+        courseToAdd, 
+        noTimeConflict, 
+        choseDuplicateCourse, 
+        conflictCourse, 
+        courseList 
+    }: LectureOnHoldRouteParamProps = route.params;
     return (   
-            noTimeConflict 
+            (noTimeConflict && !choseDuplicateCourse)
                 ? <LectureHoldSuccess 
                     courseToAdd={courseToAdd} 
                     navigation={navigation}
                     courseList={courseList} /> 
                 : <RemoveWarning 
                     courseToAdd={courseToAdd} 
-                    timeConflictCourse={timeConflictCourse}
+                    conflictCourse={conflictCourse}
                     navigation={navigation}
                     courseList={courseList} /> 
     );

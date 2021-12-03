@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { getDatabase, ref, update, get, child } from 'firebase/database';
 import { CourseType } from "../Swiper/CourseViews/CourseType";
 
-function removeInDb(timeConflictCourse: CourseType) {
-    let CRN = timeConflictCourse.CRN;
+function removeInDb(conflictCourse: CourseType) {
+    let CRN = conflictCourse.CRN;
     // Loop through all the items in database
     // Remove the one that contains CRN
     const dbRef = ref(getDatabase());
@@ -29,14 +29,14 @@ function removeInDb(timeConflictCourse: CourseType) {
 
 interface RemoveWarningProps {
     courseToAdd: CourseType,
-    timeConflictCourse: CourseType,
+    conflictCourse: CourseType,
     navigation: any,
     courseList: Array<CourseType>
 }
 
 export const RemoveWarning: React.FC<RemoveWarningProps> = ({
     courseToAdd,
-    timeConflictCourse,
+    conflictCourse,
     courseList,
     navigation
 }) => {
@@ -48,10 +48,10 @@ export const RemoveWarning: React.FC<RemoveWarningProps> = ({
                 </Text>
                 <View style={styles.courseContainer}>
                     <Text style={styles.containerText}>
-                        {timeConflictCourse.Subject + " " + timeConflictCourse.Number}
+                        {conflictCourse.Subject + conflictCourse.Number + ": " + conflictCourse.Section}
                     </Text>
                     <Text style={styles.containerText}>
-                        {timeConflictCourse["Days of Week"] + " | " + timeConflictCourse["Start Time"] + " to " + timeConflictCourse["End Time"]}
+                        {conflictCourse["Days of Week"] + " | " + conflictCourse["Start Time"] + " to " + conflictCourse["End Time"]}
                     </Text>
                 </View>
                 <Text style={styles.text}>
@@ -59,14 +59,15 @@ export const RemoveWarning: React.FC<RemoveWarningProps> = ({
                 </Text>
                 <View style={styles.courseContainer}>
                     <Text style={styles.containerText}>
-                        {courseToAdd.Subject + " " + courseToAdd.Number}
+                        {courseToAdd.Subject + courseToAdd.Number + ": " 
+                            + (courseToAdd.Section ? courseToAdd.Section : "UNKNOWN")}
                     </Text>
                     <Text style={styles.containerText}>
                         {courseToAdd["Days of Week"] + " | " + courseToAdd["Start Time"] + " to " + courseToAdd["End Time"]}
                     </Text>
                 </View>
                 <Text style={[styles.warningTextStyles, styles.text]}>
-                    This will remove multiple sections!
+                    This may remove multiple sections!
                 </Text>
                 <View style={styles.buttonsContain}>
                     <Pressable 
@@ -84,7 +85,7 @@ export const RemoveWarning: React.FC<RemoveWarningProps> = ({
                     </Pressable>
                     <Pressable
                         onPress={()=>{
-                            removeInDb(timeConflictCourse)
+                            removeInDb(conflictCourse)
                             navigation.navigate("RemoveAllSuccess", 
                                 {course: courseToAdd, courseList: courseList})
                         }}
