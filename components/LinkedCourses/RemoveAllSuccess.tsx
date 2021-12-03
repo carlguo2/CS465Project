@@ -8,12 +8,17 @@ interface RemoveAllSuccessProps {
     navigation: any,
     route: any
 }
+
+interface RemoveAllSuccessRouteParams {
+    course: CourseType,
+    courseList: Array<CourseType>
+}
  
 const RemoveAllSuccess: React.FC<RemoveAllSuccessProps> = ({ 
     navigation, 
     route 
 }) => {
-    const { course }: {course: CourseType} = route.params;
+    const { course, courseList }: RemoveAllSuccessRouteParams = route.params;
 
     return(
         <View style={styles.viewContainer}>
@@ -24,9 +29,9 @@ const RemoveAllSuccess: React.FC<RemoveAllSuccessProps> = ({
             <View style = {styles.btm}>
                 <Pressable
                     style={[styles.button, styles.buttonAdd]}
-                    // disabled={noTimeConflict}
                     onPress={() => {
-                        navigation.navigate('DiscussionDetail', {lectureCourse: course})
+                        navigation.navigate('DiscussionDetail', 
+                            {lectureCourse: course, courseList: courseList})
                     }}
                 >
                     <Text style={styles.textStyle}>Next</Text>

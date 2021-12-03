@@ -3,6 +3,27 @@ import React from 'react';
 import { parseCourseTimes } from './Swiper/CourseViews/CourseOpenView';
 import { CourseType } from './Swiper/CourseViews/CourseType';
 
+export function hasNoCourseConflict(
+	registeredCourse: CourseType,
+	toRegisterCourse: CourseType
+): boolean {
+	let regCourseStartTime = parseCourseTimes(registeredCourse["Start Time"]);
+	let regCourseEndTime = parseCourseTimes(registeredCourse["End Time"]);
+	let toRegCourseStartTime = parseCourseTimes(toRegisterCourse["Start Time"]);
+	let toRegCourseEndTime = parseCourseTimes(toRegisterCourse["End Time"]);
+	// register course starts after to register
+	if (regCourseStartTime > toRegCourseEndTime) {
+		return true;
+	}
+	// to register course starts after register
+	if (toRegCourseStartTime > regCourseEndTime) {
+		return true;
+	}
+	let concatLength = (new Set(registeredCourse["Days of Week"] + toRegisterCourse["Days of Week"])).size; 
+	let separateLength = registeredCourse["Days of Week"].length + toRegisterCourse["Days of Week"].length;
+	return concatLength === separateLength;
+}
+
 interface CourseModalProps {
 	course: CourseType,
 	modalVisible: boolean,
@@ -18,30 +39,8 @@ export const CourseModal: React.FC<CourseModalProps> = ({
 	navigation,
 	courseList
 }) => {
-    // const { course, modalVisible, setModalVisible, navigation, courseList } = props;
     let noTimeConflict = true;
     let timeConflictCourse = {} as CourseType;
-
-    function hasNoCourseConflict(
-        registeredCourse: CourseType,
-        toRegisterCourse: CourseType
-    ) {
-        let regCourseStartTime = parseCourseTimes(registeredCourse["Start Time"]);
-        let regCourseEndTime = parseCourseTimes(registeredCourse["End Time"]);
-        let toRegCourseStartTime = parseCourseTimes(toRegisterCourse["Start Time"]);
-        let toRegCourseEndTime = parseCourseTimes(toRegisterCourse["End Time"]);
-        // register course starts after to register
-        if (regCourseStartTime > toRegCourseEndTime) {
-            return true;
-        }
-        // to register course starts after register
-        if (toRegCourseStartTime > regCourseEndTime) {
-            return true;
-        }
-        let concatLength = (new Set(registeredCourse["Days of Week"] + toRegisterCourse["Days of Week"])).size 
-        let separateLength = registeredCourse["Days of Week"].length + toRegisterCourse["Days of Week"].length;
-        return concatLength === separateLength;
-    }
 
     for (var i = 0; i < courseList.length; i++) {
         if (!hasNoCourseConflict(course, courseList[i])) {
@@ -90,7 +89,8 @@ export const CourseModal: React.FC<CourseModalProps> = ({
                                 navigation.navigate('LectureOnHold', {
                                   courseToAdd: course, 
                                   noTimeConflict: noTimeConflict,
-                                  timeConflictCourse: timeConflictCourse
+                                  timeConflictCourse: timeConflictCourse,
+                                  courseList: courseList
                                 })
                             }}
                       >

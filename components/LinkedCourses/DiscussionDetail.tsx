@@ -2,10 +2,16 @@ import React from "react";
 import { StyleSheet, Text, Pressable, ScrollView } from 'react-native';
 import courseData from "../../backend/courses.json";
 import { CourseType } from "../Swiper/CourseViews/CourseType";
+import { hasNoCourseConflict } from '../CourseModal';
 
 interface DiscussionDetailProps {
     navigation: any,
     route: any
+}
+
+interface DiscussionDetailRouteParams {
+    lectureCourse: CourseType,
+    courseList: Array<CourseType>
 }
 
 const DiscussionDetail: React.FC<DiscussionDetailProps> = ({
@@ -13,7 +19,7 @@ const DiscussionDetail: React.FC<DiscussionDetailProps> = ({
     route
 }) => {
     
-    let { lectureCourse }: {lectureCourse: CourseType} = route.params;
+    let { lectureCourse, courseList }: DiscussionDetailRouteParams = route.params;
     
     function retrieveLabData() {
         var linkedCourses: Array<CourseType> = [];
@@ -24,18 +30,32 @@ const DiscussionDetail: React.FC<DiscussionDetailProps> = ({
                 linkedCourses.push(courseData[i]);
             }
         }
+
+        // check time conflict
+        let coursesToCheckConflict = [...courseList, lectureCourse];
         
         if (linkedCourses.length > 0) {
-            return linkedCourses.map((linkedCourse, index) => {                
+            return linkedCourses.map((linkedCourse, index) => {      
+                let hasTimeConflict = false;
+                for (let heldCourse of coursesToCheckConflict) {
+                    if (!hasNoCourseConflict(heldCourse, linkedCourse)) {
+                        hasTimeConflict = true;
+                        break;
+                    }
+                }          
                 return (
-                    <Pressable style={styles.entry} key={index}
-                    onPress={() => {
-                        navigation.navigate('LabOnHold', {lec: lectureCourse, lab: linkedCourse})
-                    }}>
-                    <Text>{linkedCourse.Type}</Text>
-                    <Text>
-                        {linkedCourse["Days of Week"]}  |  {linkedCourse["Start Time"]}  -  {linkedCourse["End Time"]}
-                    </Text>
+                    <Pressable 
+                        style={[styles.entry, hasTimeConflict ? styles.disabled : {}]} 
+                        key={index}
+                        disabled={hasTimeConflict}
+                        onPress={() => {
+                            navigation.navigate('LabOnHold', {lec: lectureCourse, lab: linkedCourse})
+                        }}
+                    >
+                        <Text>{linkedCourse.Type + (hasTimeConflict ? " - Time Conflict :(" : "")}</Text>
+                        <Text>
+                            {linkedCourse["Days of Week"]}  |  {linkedCourse["Start Time"]}  -  {linkedCourse["End Time"]}
+                        </Text>
                     </Pressable>
                 )
             })
@@ -78,7 +98,7 @@ const styles = StyleSheet.create({
         marginTop: 25,
         justifyContent: "center",
         width: "90%",
-        backgroundColor: "#fff",
+        backgroundColor: "#f4a460",
         height: 90,
         alignItems: "center",
         shadowColor: "#000",
@@ -92,6 +112,8 @@ const styles = StyleSheet.create({
         borderColor: "#0455A4",
         borderWidth: 2,
         marginLeft: "5%",
-
+    },
+    disabled: {
+        backgroundColor: '#a9a9a9'
     }
 })

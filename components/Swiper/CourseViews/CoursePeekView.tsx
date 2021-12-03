@@ -37,7 +37,6 @@ export const CoursePeekView: React.FC<CoursePeekViewProps> = ({
                                             {
                                                 text: "Delete",
                                                 onPress: () => {
-                                                    console.log("DB delete")
                                                     const dbRef = ref(getDatabase());
                                                     get(child(dbRef, 'carlguo2/')).then((snapshot) => {
                                                         if (snapshot.exists()) {

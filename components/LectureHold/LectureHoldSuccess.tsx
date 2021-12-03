@@ -6,11 +6,13 @@ import { CourseType } from '../Swiper/CourseViews/CourseType'
 
 interface LectureHoldSuccessProp {
     navigation: any,
-    course: CourseType
+    courseToAdd: CourseType,
+    courseList: Array<CourseType>
 }
 
 export const LectureHoldSuccess: React.FC<LectureHoldSuccessProp> = ({
-    course,
+    courseToAdd,
+    courseList,
     navigation
 }) => {
     // const { course, navigation } = props;
@@ -24,20 +26,21 @@ export const LectureHoldSuccess: React.FC<LectureHoldSuccessProp> = ({
             <Image style={styles.img} source={BlueTick}/>
             <View style={styles.detailView}>
                 <Text  style={styles.detail}>
-                    {course.Subject + "  " + course.Number}
+                    {courseToAdd.Subject + "  " + courseToAdd.Number}
                 </Text>
                 <Text  style={styles.detail}>
-                    {course.Name}
+                    {courseToAdd.Name}
                 </Text>
                 <Text  style={styles.detail}>
-                    {course["Days of Week"] + " | " + course["Start Time"] + " - " + course["End Time"]}
+                    {courseToAdd["Days of Week"] + " | " + courseToAdd["Start Time"] + " - " + courseToAdd["End Time"]}
                 </Text>
             </View>
             <View style = {styles.btm}>
                 <Pressable
                     style={[styles.button, styles.buttonAdd]}
-                    // disabled={noTimeConflict}
-                    onPress={() => navigation.navigate('DiscussionDetail', {lectureCourse: course})}
+                    onPress={() => navigation.navigate('DiscussionDetail', 
+                        {lectureCourse: courseToAdd, courseList: courseList}
+                    )}
                 >
                     <Text style={styles.textStyle}>Next</Text>
                 </Pressable>

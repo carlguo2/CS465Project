@@ -47,7 +47,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
     }
 
     function removeCourseFromSchedule(courseToRemove: CourseType): void {
-        console.log("remove course: ", courseToRemove.Subject, courseToRemove.Number);
         setUserCourses(sort(userCourses.filter(course => 
                                 course.Subject !== courseToRemove.Subject 
                                 && course.Number !== courseToRemove.Number)));
@@ -59,7 +58,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
 
         onValue(reference, (snapshot) => {
             let newCRNs = []
-            console.log("onvalue retrieve")
             const v = snapshot.val();
             if (!v) {
                 return
@@ -73,11 +71,9 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
             }
             newCRNs = [...new Set(newCRNs)]
             setCRNs(newCRNs);
-            console.log("onvalue num CRNs:", CRNs);
         });
 
         onChildRemoved(reference, (snapshot) => {
-            console.log("onchildremove retrieved!");
             let tempCRNs = CRNs
             const v = snapshot.val();
             if (!v) {
@@ -88,7 +84,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
                 tempCRNs.filter(crn => crn !== c[j]);
             }
             setCRNs(tempCRNs)
-            console.log("after remove CRNs:", CRNs);
         })
     }
 
@@ -169,12 +164,10 @@ const CourseDetail: React.FC<CourseDetailProps> = ({
 
     useEffect(() => {
         retrieveUserData()
-        console.log("retrieve")
     }, [])
 
     useEffect(() => {
         updateCourses();
-        console.log("other useEffect")
     }, [CRNs]);
 
     return (

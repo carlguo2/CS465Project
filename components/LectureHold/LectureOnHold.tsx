@@ -11,21 +11,26 @@ interface LectureOnHoldProps {
 interface LectureOnHoldRouteParamProps {
     courseToAdd: CourseType,
     noTimeConflict: boolean,
-    timeConflictCourse: CourseType
+    timeConflictCourse: CourseType,
+    courseList: Array<CourseType>
 }
 
 const LectureOnHold: React.FC<LectureOnHoldProps> = ({
     navigation,
     route
 }) => {
-    let { courseToAdd, noTimeConflict, timeConflictCourse }: LectureOnHoldRouteParamProps = route.params;
-    console.log("lec: ", courseToAdd.CRN);
+    let { courseToAdd, noTimeConflict, timeConflictCourse, courseList }: LectureOnHoldRouteParamProps = route.params;
     return (   
             noTimeConflict 
-                ? <LectureHoldSuccess course={courseToAdd} navigation={navigation} /> 
-                : <RemoveWarning courseToAdd={courseToAdd} 
+                ? <LectureHoldSuccess 
+                    courseToAdd={courseToAdd} 
+                    navigation={navigation}
+                    courseList={courseList} /> 
+                : <RemoveWarning 
+                    courseToAdd={courseToAdd} 
                     timeConflictCourse={timeConflictCourse}
-                    navigation={navigation} /> 
+                    navigation={navigation}
+                    courseList={courseList} /> 
     );
 }
 

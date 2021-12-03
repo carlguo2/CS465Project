@@ -30,12 +30,14 @@ function removeInDb(timeConflictCourse: CourseType) {
 interface RemoveWarningProps {
     courseToAdd: CourseType,
     timeConflictCourse: CourseType,
-    navigation: any
+    navigation: any,
+    courseList: Array<CourseType>
 }
 
 export const RemoveWarning: React.FC<RemoveWarningProps> = ({
     courseToAdd,
     timeConflictCourse,
+    courseList,
     navigation
 }) => {
     return (
@@ -83,7 +85,8 @@ export const RemoveWarning: React.FC<RemoveWarningProps> = ({
                     <Pressable
                         onPress={()=>{
                             removeInDb(timeConflictCourse)
-                            navigation.navigate("RemoveAllSuccess", {course: courseToAdd})
+                            navigation.navigate("RemoveAllSuccess", 
+                                {course: courseToAdd, courseList: courseList})
                         }}
                         style={[styles.removeButton, styles.button]}
                     >

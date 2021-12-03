@@ -9,7 +9,6 @@ import { CourseType } from "../Swiper/CourseViews/CourseType";
 function writeUserData(crn_lec: number, crn_lab: number | null) {
     const db = getDatabase();
     const reference = ref(db, 'carlguo2/' + Math.round(Date.now() / 1000));
-    console.log(crn_lec, " ", crn_lab)
     update(reference, {
         title: crn_lab ? String(crn_lec + " " + crn_lab) : String(crn_lec),
     });
