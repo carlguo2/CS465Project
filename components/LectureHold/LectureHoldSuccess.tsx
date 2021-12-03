@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Image, Text, View } from 'react-native';
 // @ts-ignore
 import BlueTick from "../../assets/blueTick.png";
 import { CourseType } from '../Swiper/CourseViews/CourseType'
@@ -15,7 +15,11 @@ export const LectureHoldSuccess: React.FC<LectureHoldSuccessProp> = ({
     courseList,
     navigation
 }) => {
-    // const { course, navigation } = props;
+    setTimeout(() => {
+        navigation.navigate('DiscussionDetail', 
+            {lectureCourse: courseToAdd, courseList: courseList})
+    }, 1500);
+
     return(
         <View style={styles.container}>
             <View  style={styles.title}>
@@ -35,16 +39,6 @@ export const LectureHoldSuccess: React.FC<LectureHoldSuccessProp> = ({
                     {courseToAdd["Days of Week"] + " | " + courseToAdd["Start Time"] + " - " + courseToAdd["End Time"]}
                 </Text>
             </View>
-            <View style = {styles.btm}>
-                <Pressable
-                    style={[styles.button, styles.buttonAdd]}
-                    onPress={() => navigation.navigate('DiscussionDetail', 
-                        {lectureCourse: courseToAdd, courseList: courseList}
-                    )}
-                >
-                    <Text style={styles.textStyle}>Next</Text>
-                </Pressable>
-            </View>
         </View>
     );
 }
@@ -54,28 +48,7 @@ const styles = StyleSheet.create({
         marginTop: "15%",
         fontSize: 30
     },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-      },
-    button: {
-        marginTop: 50,
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-      },
-      buttonOpen: {
-        backgroundColor: "#F194FF",
-      },
-      buttonAdd: {
-          backgroundColor: "#2196F3",
-      },
-    btm: {
-        flex: 6
-    },
     detailView: {
-        flex: 3,
         flexDirection: 'column',
         paddingHorizontal: 30,
         paddingVertical: 10,
@@ -84,7 +57,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#D1D1D6"
     },
     title: {
-        flex: 4
+        marginBottom: "15%"
     },
     container: {
         flexDirection: 'column',
@@ -95,10 +68,11 @@ const styles = StyleSheet.create({
     img: {
         width: 100,
         height: 100,
-        alignContent: "center"
+        alignContent: "center",
+        marginBottom: "15%"
     },
     detail: {
-        flex: 1,
-        textAlign: "center"
+        textAlign: "center",
+        padding: "3%"
     }
 })
