@@ -2,19 +2,23 @@ import { Animated, Dimensions, PanResponder, GestureResponderEvent, PanResponder
 import React, { useEffect, useRef, useState } from "react"
 import { DrawerState } from "./DrawerState"
 import { animateMove, getNextState } from "./AnimateHelper"
-import { CourseList } from "./CourseViews/CourseList";
+import { DrawerStatePicker } from "./CourseViews/DrawerStatePicker";
 import { CourseType } from "./CourseViews/CourseType";
 import { Icon } from "react-native-elements";
 
 type BottomDrawerProps = {
     courses: Array<CourseType>,
-    name: string
+    removeCourseFromSchedule: (CourseType) => void
 }
 
 const BottomDrawer: React.FC<BottomDrawerProps> = ({
     courses,
-    name
+    removeCourseFromSchedule
 }) => {
+    useEffect(() => {
+        console.log("drawer courses update")
+    }, [courses])
+
     const { height } = Dimensions.get("window");
     /* Declare initial value of y. In this case, we want it to be closed when the component is closed */
     const y = React.useRef(new Animated.Value(DrawerState.Closed)).current;
@@ -82,8 +86,9 @@ const BottomDrawer: React.FC<BottomDrawerProps> = ({
             }]}
             /* Refers to the PanResponder created above */
             {...panResponder.panHandlers} >
+            {/* @ts-ignore */}
             {state._value === DrawerState.Open 
-                ?
+                ? 
                 <Icon 
                     name="chevron-down"
                     type="font-awesome"
@@ -101,7 +106,11 @@ const BottomDrawer: React.FC<BottomDrawerProps> = ({
                 />
             }
             {
-                <CourseList courses={courses} drawerState={(state as any)._value} />
+                <DrawerStatePicker
+                    courses={courses} 
+                    removeCourseFromSchedule={removeCourseFromSchedule} 
+                    drawerState={(state as any)._value} 
+                />
             }
         </Animated.View>
     );

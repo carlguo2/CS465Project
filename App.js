@@ -17,7 +17,7 @@ const App = () => {
         <Stack.Screen
           name="ProfileScreen"
           component={ProfileScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Welcome Student' }}
         />
         <Stack.Screen name="CourseDetail" component={CourseDetail} />
         <Stack.Screen name="LectureOnHold" component={LectureOnHold} />

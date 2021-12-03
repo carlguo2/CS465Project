@@ -1,14 +1,17 @@
-import { ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import React from "react";
 import { CourseType } from "./CourseType";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Alert } from "react-native";
+import { child, get, getDatabase, ref, update } from "@firebase/database";
 
 interface CoursePeekViewProps {
-    courses: Array<CourseType>
+    courses: Array<CourseType>,
+    removeCourseFromSchedule: (CourseType) => void
 }
 
 export const CoursePeekView: React.FC<CoursePeekViewProps> = ({
-    courses
+    courses,
+    removeCourseFromSchedule
 }) => {
     return (
         <View style={styles.peekContainer}>
@@ -17,12 +20,54 @@ export const CoursePeekView: React.FC<CoursePeekViewProps> = ({
                 horizontal={true} 
                 contentContainerStyle={styles.coursesRegion}
             >
-                {courses.map((course, index) => {
+                {courses && 
+                courses.map((course, index) => {
                     return(
-                        <View style={styles.courseBox} key={index}>
-                            <Text style={styles.courseText}>{course.Subject}</Text>
-                            <Text style={styles.courseText}>{course.Number}</Text>
-                        </View>
+                        <Pressable 
+                            key={index}
+                            onLongPress={
+                                () => {
+                                    Alert.alert(
+                                        "Delete Warning",
+                                        "Are you sure you want to delete this course? Linked courses will also be deleted.",
+                                        [
+                                            {
+                                                text: "Back"
+                                            }, 
+                                            {
+                                                text: "Delete",
+                                                onPress: () => {
+                                                    console.log("DB delete")
+                                                    const dbRef = ref(getDatabase());
+                                                    get(child(dbRef, 'carlguo2/')).then((snapshot) => {
+                                                        if (snapshot.exists()) {
+                                                            let snapshotVal = snapshot.val();
+                                                            for (var key in snapshotVal) {
+                                                                if (snapshotVal[key]['title'].includes(course.CRN.toString())) {
+                                                                    const updates = {}
+                                                                    updates['carlguo2/' + key] = null
+                                                                    update(dbRef, updates);
+                                                                }
+                                                            }
+                                                        } else {
+                                                            console.log("no data to delete");
+                                                        }
+                                                    }).catch((error) => {
+                                                        console.error("error", error);
+                                                    });
+                                                    // removeCourseFromSchedule(course)
+                                                }
+                                            }
+                                        ]
+                                    );
+                                }
+                            }
+                        >
+                            <View style={styles.courseBox} key={index}>
+                                <Text style={styles.courseText}>{course.Subject}</Text>
+                                <Text style={styles.courseText}>{course.Number}</Text>
+                            </View>
+                        </Pressable>
                     );
                 })}
             </ScrollView>
