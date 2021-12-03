@@ -21,7 +21,7 @@ const RemoveAllSuccess: React.FC<RemoveAllSuccessProps> = ({
     const { course, courseList }: RemoveAllSuccessRouteParams = route.params;
 
     setTimeout(() => {
-        navigation.navigate('DiscussionDetail', 
+        navigation.navigate('LinkedSectionDetails', 
             {lectureCourse: course, courseList: courseList})
     }, 1500);   
 

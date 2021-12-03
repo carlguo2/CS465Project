@@ -2,15 +2,20 @@ import React from "react";
 import { StyleSheet, Image, Text, View } from 'react-native';
 import { getDatabase, ref, update } from 'firebase/database';
 // @ts-ignore
-import GreenTick from '../../assets/greenTick.png';
-import { CourseType } from "../Swiper/CourseViews/CourseType";
+import GreenTick from '../../../assets/greenTick.png';
+import { CourseType } from "../../Swiper/CourseViews/CourseType";
 
 
-function writeUserData(crn_lec: number, crn_lab: number | null) {
+function writeUserData(crn_lec: number, crn_disc: number | null, crn_lab: number | null) {
     const db = getDatabase();
     const reference = ref(db, 'carlguo2/' + Math.round(Date.now() / 1000));
+    let entry = String(crn_lec);
+    // try to add discussion CRN
+    entry = crn_disc ? entry + " " + String(crn_disc) : entry;
+    // try to add lab CRN
+    entry = crn_lab ? entry + " " + String(crn_lab) : entry;
     update(reference, {
-        title: crn_lab ? String(crn_lec + " " + crn_lab) : String(crn_lec),
+        title: entry,
     });
 }
 
@@ -20,18 +25,19 @@ interface LabOnHoldProps {
 }
 
 interface LabOnHoldRouteParams {
-    lab: CourseType,
-    lec: CourseType
+    lec: CourseType,
+    disc: CourseType,
+    lab: CourseType
 }
 
-const LabOnHold: React.FC<LabOnHoldProps> = ({
+export const LabOnHold: React.FC<LabOnHoldProps> = ({
     navigation, 
     route
 }) => {
-    let {lab, lec} : LabOnHoldRouteParams = route.params;
+    let {lab, disc, lec} : LabOnHoldRouteParams = route.params;
 
     function saveToJson() {
-        writeUserData(lec.CRN, lab.CRN)
+        writeUserData(lec.CRN, disc.CRN, lab.CRN)
     }
     saveToJson();
 

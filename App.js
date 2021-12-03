@@ -4,9 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from './components/ProfileScreen';
 import CourseDetail from './components/CourseDetail';
 import LectureOnHold from './components/LectureHold/LectureOnHold';
-import DiscussionDetail from './components/LinkedCourses/DiscussionDetail';
-import LabOnHold  from './components/LinkedCourses/LabOnHold';
+import LinkedSectionDetails from './components/LinkedCourses/LinkedSectionDetails';
+import { LabOnHold }  from './components/LinkedCourses/LabCourses/LabOnHold';
 import RemoveAllSuccess from './components/LinkedCourses/RemoveAllSuccess';
+import { DiscussionOnHold } from './components/LinkedCourses/DiscussionCourses/DiscussionOnHold';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,8 @@ const App = () => {
         />
         <Stack.Screen name="CourseDetail" component={CourseDetail} />
         <Stack.Screen name="LectureOnHold" component={LectureOnHold} />
-        <Stack.Screen name="DiscussionDetail" component={DiscussionDetail} />
+        <Stack.Screen name="LinkedSectionDetails" component={LinkedSectionDetails} />
+        <Stack.Screen name="DiscussionOnHold" component={DiscussionOnHold} />
         <Stack.Screen name="LabOnHold" component={LabOnHold} />
         <Stack.Screen name="RemoveAllSuccess" component={RemoveAllSuccess} />
       </Stack.Navigator>

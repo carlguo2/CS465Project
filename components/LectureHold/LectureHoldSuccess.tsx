@@ -16,7 +16,7 @@ export const LectureHoldSuccess: React.FC<LectureHoldSuccessProp> = ({
     navigation
 }) => {
     setTimeout(() => {
-        navigation.navigate('DiscussionDetail', 
+        navigation.navigate('LinkedSectionDetails', 
             {lectureCourse: courseToAdd, courseList: courseList})
     }, 1500);
 
